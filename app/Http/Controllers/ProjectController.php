@@ -7,7 +7,6 @@ use App\Http\Requests\ProjectRequest;
 use Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Project;
 
 class ProjectController extends Controller
@@ -42,7 +41,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         Project::create($request->all());
-        return redirect('project');
+        return redirect('projects');
     }
 
     /**
@@ -91,6 +90,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return redirect('projects');
     }
 }

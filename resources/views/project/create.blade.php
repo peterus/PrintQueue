@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::open(['url' => 'project']) !!}
+    {!! Form::open(['url' => 'projects']) !!}
 
     @include('project.form', ['submitButtonText' => 'Add Project'])
 

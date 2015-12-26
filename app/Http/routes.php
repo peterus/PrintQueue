@@ -12,7 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect('projects');
 });
 
 Route::resource('projects', 'ProjectController');
+Route::resource('printjob', 'PrintJobController', ['except' => [
+    'create', 'store',
+]]);
+Route::get('projects/{projects}/printjob', 'PrintJobController@project_index')->name('printjob.project_index');
+Route::get('projects/{projects}/printjob/create', 'PrintJobController@create')->name('printjob.create');
+Route::post('projects/{projects}/printjob', 'PrintJobController@store')->name('printjob.store');

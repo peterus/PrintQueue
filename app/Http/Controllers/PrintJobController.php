@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
+use App\Http\Requests\PrintJobRequest;
 use App\Http\Requests\ProjectRequest;
 use Request;
 
@@ -15,15 +16,16 @@ class PrintJobController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Project $project
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $project)
+    public function project_index(Project $project)
     {
         $jobs = $project->PrintJob;
         return view('print_job.index', compact('jobs'));
     }
 
-    public function index_all()
+    public function index()
     {
         $jobs = PrintJob::All();
         return view('print_job.index', compact('jobs'));
@@ -34,40 +36,43 @@ class PrintJobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
-        return view('print_job.create');
+        return view('print_job.create', compact('project'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param PrintJobRequest|\Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PrintJobRequest $request)
+    public function store(Project $project, PrintJobRequest $request)
     {
-        PrintJob::create($request->all());
-        return redirect('projects');
+        $job = new PrintJob($request->all());
+        $project->PrintJob()->save($job);
+        return redirect('printjob');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Project $project
+     * @param PrintJob $printjob
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function show(PrintJob $printjob)
     {
-        return $printjob;
-        return view('print_job.show', compact('printjob'));
+        return view('print_job.show', compact('projct', 'printjob'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param PrintJob $printjob
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function edit(PrintJob $printjob)
     {
@@ -77,14 +82,15 @@ class PrintJobController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param PrintJobRequest|\Illuminate\Http\Request $request
+     * @param PrintJob $printjob
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(PrintJobRequest $request, PrintJob $printjob)
     {
         $printjob->update($request->all());
-        return redirect('projects');
+        return redirect('printjob');
     }
 
     /**
@@ -97,6 +103,6 @@ class PrintJobController extends Controller
     public function destroy(PrintJob $printjob)
     {
         $printjob->delete();
-        return redirect('projects');
+        return redirect('printjob');
     }
 }
