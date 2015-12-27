@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use App\Http\Requests\PrintJobRequest;
-use App\Http\Requests\ProjectRequest;
 use Request;
 
 use App\Http\Requests;
@@ -64,7 +62,7 @@ class PrintJobController extends Controller
      */
     public function show(PrintJob $printjob)
     {
-        return view('print_job.show', compact('projct', 'printjob'));
+        return view('print_job.show', compact('printjob'));
     }
 
     /**

@@ -27,6 +27,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
         $router->model('projects', 'App\Project');
         $router->model('printjob', 'App\PrintJob');
+        $router->model('slicer', 'App\Slicer');
+        $router->model('slicersetting', 'App\SlicerSetting');
     }
 
     /**

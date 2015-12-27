@@ -16,6 +16,14 @@ Route::get('/', function () {
     return redirect('projects');
 });
 
+Route::resource('slicer', 'SlicerController');
+Route::resource('slicersetting', 'SlicerSettingController', ['except' => [
+    'create', 'store',
+]]);
+Route::get('slicer/{slicer}/setting', 'SlicerSettingController@slicer_index')->name('slicersetting.slicer_index');
+Route::get('slicer/{slicer}/setting/create', 'SlicerSettingController@create')->name('slicersetting.create');
+Route::post('slicer/{slicer}/setting', 'SlicerSettingController@store')->name('slicersetting.store');
+
 Route::resource('projects', 'ProjectController');
 Route::resource('printjob', 'PrintJobController', ['except' => [
     'create', 'store',
