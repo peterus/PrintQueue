@@ -16,6 +16,7 @@ class CreatePrintJobsTable extends Migration
             $table->increments('id');
             $table->integer('project_id')->unsigned();
             $table->string('name');
+            $table->string('stl');
             $table->timestamps();
 
             $table->foreign('project_id')

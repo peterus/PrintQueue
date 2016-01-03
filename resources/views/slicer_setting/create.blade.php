@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::open(['url' => 'slicer/'.$slicer->id.'/setting']) !!}
+    {!! Form::open(['url' => 'slicer/'.$slicer->id.'/setting', 'files' => true]) !!}
 
     @include('slicer_setting.form', ['submitButtonText' => 'Add Slicer Setting'])
 

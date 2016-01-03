@@ -7,7 +7,10 @@
         Create at: <b>{!! $project->created_at !!}</b><br>
         Last update: <b>{!! $project->updated_at !!}</b>
     </p>
-    <p><a href="/projects/{!! $project->id !!}/printjob">Print Jobs</a></p>
+    <p>
+        <a href="/projects/{!! $project->id !!}/edit">edit</a><br>
+        <a href="/projects/{!! $project->id !!}/printjob">Print Jobs</a>
+    </p>
 
     <hr/>
 

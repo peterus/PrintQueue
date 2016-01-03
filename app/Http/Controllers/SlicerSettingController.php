@@ -9,6 +9,10 @@ use App\Http\Requests;
 use App\Slicer;
 use App\SlicerSetting;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
+
 class SlicerSettingController extends Controller
 {
     public function slicer_index(Slicer $slicer)
@@ -41,12 +45,19 @@ class SlicerSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Slicer $slicer
+     * @param SlicerSettingRequest|\Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Slicer $slicer, SlicerSettingRequest $request)
     {
+        $file = Request::file('config');
+        $extension = $file->getClientOriginalExtension();
+        $new_filename = $file->getFilename().'.'.$extension;
+        Storage::disk('local')->put($new_filename, File::get($file));
+
         $setting = new SlicerSetting($request->all());
+        $setting->config = $new_filename;
         $slicer->Setting()->save($setting);
         return redirect('slicersetting');
     }
@@ -54,8 +65,9 @@ class SlicerSettingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param SlicerSetting $setting
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function show(SlicerSetting $setting)
     {
@@ -65,8 +77,9 @@ class SlicerSettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param SlicerSetting $setting
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function edit(SlicerSetting $setting)
     {
@@ -76,21 +89,36 @@ class SlicerSettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param SlicerSettingRequest|\Illuminate\Http\Request $request
+     * @param SlicerSetting $setting
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(SlicerSettingRequest $request, SlicerSetting $setting)
     {
+        if($setting->config != "" && Storage::disk('local')->exists($setting->config))
+        {
+            Storage::disk('local')->delete($setting->config);
+        }
+
+        $file = Request::file('config');
+        $extension = $file->getClientOriginalExtension();
+        $new_filename = $file->getFilename().'.'.$extension;
+        Storage::disk('local')->put($new_filename, File::get($file));
+
         $setting->update($request->all());
+        $setting->config = $new_filename;
+        $setting->save();
         return redirect('slicersetting');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param SlicerSetting $setting
      * @return \Illuminate\Http\Response
+     * @throws \Exception
+     * @internal param int $id
      */
     public function destroy(SlicerSetting $setting)
     {

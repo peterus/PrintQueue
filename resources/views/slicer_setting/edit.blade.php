@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::model($setting, ['method' => 'PATCH', 'action' => ['SlicerSettingController@update', $setting->id]]) !!}
+    {!! Form::model($setting, ['method' => 'PATCH', 'action' => ['SlicerSettingController@update', $setting->id], 'files' => true]) !!}
 
     @include('slicer_setting.form', ['submitButtonText' => 'Update Slicer Setting'])
 

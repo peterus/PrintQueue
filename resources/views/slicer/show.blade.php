@@ -8,7 +8,10 @@
         Last update: <b>{!! $slicer->updated_at !!}</b><br>
         Command: <b>{!! $slicer->command !!}</b>
     </p>
-    <p><a href="/slicer/{!! $slicer->id !!}/setting">Settings</a></p>
+    <p>
+        <a href="/slicer/{!! $slicer->id !!}/edit">edit</a><br>
+        <a href="/slicer/{!! $slicer->id !!}/setting">Settings</a>
+    </p>
 
     <hr/>
 

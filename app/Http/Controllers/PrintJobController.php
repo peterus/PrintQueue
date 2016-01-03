@@ -9,6 +9,9 @@ use App\Http\Requests;
 use App\Project;
 use App\PrintJob;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 class PrintJobController extends Controller
 {
     /**
@@ -47,7 +50,13 @@ class PrintJobController extends Controller
      */
     public function store(Project $project, PrintJobRequest $request)
     {
+        $file = Request::file('stl');
+        $extension = $file->getClientOriginalExtension();
+        $new_filename = $file->getFilename().'.'.$extension;
+        Storage::disk('local')->put($new_filename, File::get($file));
+
         $job = new PrintJob($request->all());
+        $job->stl = $new_filename;
         $project->PrintJob()->save($job);
         return redirect('projects/'.$project->id.'/printjob');
     }
@@ -87,7 +96,19 @@ class PrintJobController extends Controller
      */
     public function update(PrintJobRequest $request, PrintJob $printjob)
     {
+        if($printjob->stl != "" && Storage::disk('local')->exists($printjob->stl))
+        {
+            Storage::disk('local')->delete($printjob->stl);
+        }
+
+        $file = Request::file('stl');
+        $extension = $file->getClientOriginalExtension();
+        $new_filename = $file->getFilename().'.'.$extension;
+        Storage::disk('local')->put($new_filename, File::get($file));
+
         $printjob->update($request->all());
+        $printjob->stl = $new_filename;
+        $printjob->save();
         return redirect('printjob');
     }
 

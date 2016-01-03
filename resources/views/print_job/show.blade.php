@@ -3,8 +3,12 @@
 @section('content')
     <h2>{!! $printjob->name !!}</h2>
     <hr/>
-    <p>Create at: <b>{!! $printjob->created_at !!}</b><br>
-        Last update: <b>{!! $printjob->updated_at !!}</b></p>
+    <p>
+        Create at: <b>{!! $printjob->created_at !!}</b><br>
+        Last update: <b>{!! $printjob->updated_at !!}</b>
+    </p>
+
+    <p><a href="/printjob/{!! $printjob->id !!}/edit">edit</a></p>
 
     <hr/>
 

@@ -17,6 +17,7 @@ Route::get('/', function () {
     return redirect('projects');
 });
 
+
 Route::get   ('projects', 'ProjectController@index');
 Route::post  ('projects', 'ProjectController@store');
 Route::get   ('projects/create', 'ProjectController@create');

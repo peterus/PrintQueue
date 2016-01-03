@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::open(['url' => 'projects/'.$project->id.'/printjob']) !!}
+    {!! Form::open(['url' => 'projects/'.$project->id.'/printjob', 'files' => true]) !!}
 
     @include('print_job.form', ['submitButtonText' => 'Add Print Job'])
 

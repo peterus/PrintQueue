@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::model($printjob, ['method' => 'PATCH', 'action' => ['PrintJobController@update', $printjob->id]]) !!}
+    {!! Form::model($printjob, ['method' => 'PATCH', 'action' => ['PrintJobController@update', $printjob->id], 'files' => true]) !!}
 
     @include('print_job.form', ['submitButtonText' => 'Update Print Job'])
 
