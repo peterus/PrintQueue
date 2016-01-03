@@ -57,7 +57,8 @@ class SlicerSettingController extends Controller
         Storage::disk('local')->put($new_filename, File::get($file));
 
         $setting = new SlicerSetting($request->all());
-        $setting->config = $new_filename;
+        $setting->file_name = $file->getFilename();
+        $setting->file_extension = ".".$extension;
         $slicer->Setting()->save($setting);
         return redirect('slicersetting');
     }
@@ -96,9 +97,9 @@ class SlicerSettingController extends Controller
      */
     public function update(SlicerSettingRequest $request, SlicerSetting $setting)
     {
-        if($setting->config != "" && Storage::disk('local')->exists($setting->config))
+        if($setting->file_name != "" && Storage::disk('local')->exists($setting->file_name.$setting->file_extension))
         {
-            Storage::disk('local')->delete($setting->config);
+            Storage::disk('local')->delete($setting->file_name.$setting->file_extension);
         }
 
         $file = Request::file('config');
@@ -107,7 +108,8 @@ class SlicerSettingController extends Controller
         Storage::disk('local')->put($new_filename, File::get($file));
 
         $setting->update($request->all());
-        $setting->config = $new_filename;
+        $setting->file_name = $file->getFilename();
+        $setting->file_extension = ".".$extension;
         $setting->save();
         return redirect('slicersetting');
     }

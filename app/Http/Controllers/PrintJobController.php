@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PrintJobRequest;
+use App\SlicerSetting;
 use Request;
 
 use App\Http\Requests;
 use App\Project;
 use App\PrintJob;
 
+use App\Commands\ProcessSTL;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Queue;
 
 class PrintJobController extends Controller
 {
@@ -56,8 +60,15 @@ class PrintJobController extends Controller
         Storage::disk('local')->put($new_filename, File::get($file));
 
         $job = new PrintJob($request->all());
-        $job->stl = $new_filename;
+        $job->file_name = $file->getFilename();
+        $job->file_extension = ".".$extension;
         $project->PrintJob()->save($job);
+
+        foreach(SlicerSetting::All() as $setting)
+        {
+            Queue::push(new ProcessSTL($job, $setting));
+        }
+
         return redirect('projects/'.$project->id.'/printjob');
     }
 
@@ -96,9 +107,9 @@ class PrintJobController extends Controller
      */
     public function update(PrintJobRequest $request, PrintJob $printjob)
     {
-        if($printjob->stl != "" && Storage::disk('local')->exists($printjob->stl))
+        if($printjob->file_name != "" && Storage::disk('local')->exists($printjob->file_name.$printjob->file_extension))
         {
-            Storage::disk('local')->delete($printjob->stl);
+            array_map('unlink', glob(storage_path("app/".$printjob->file_name."*")));
         }
 
         $file = Request::file('stl');
@@ -107,8 +118,15 @@ class PrintJobController extends Controller
         Storage::disk('local')->put($new_filename, File::get($file));
 
         $printjob->update($request->all());
-        $printjob->stl = $new_filename;
+        $printjob->file_name = $file->getFilename();
+        $printjob->file_extension = ".".$extension;
         $printjob->save();
+
+        foreach(SlicerSetting::All() as $setting)
+        {
+            Queue::push(new ProcessSTL($printjob, $setting));
+        }
+
         return redirect('printjob');
     }
 

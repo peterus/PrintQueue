@@ -10,6 +10,11 @@ class SlicerSetting extends Model
 
     public function Slicer()
     {
-        return $this->belongsTo('Slicer');
+        return $this->belongsTo('App\Slicer');
+    }
+
+    public function PrintTime()
+    {
+        return $this->hasMany('App\PrintTime');
     }
 }

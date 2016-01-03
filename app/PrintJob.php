@@ -12,4 +12,9 @@ class PrintJob extends Model
     {
         return $this->belongsTo('App\Project');
     }
+
+    public function PrintTime()
+    {
+        return $this->hasMany('App\PrintTime');
+    }
 }

@@ -16,7 +16,8 @@ class CreateSlicerSettingsTable extends Migration
             $table->increments('id');
             $table->integer('slicer_id')->unsigned();
             $table->string('name');
-            $table->string('config');
+            $table->string('file_name');
+            $table->string('file_extension');
             $table->timestamps();
 
             $table->foreign('slicer_id')
