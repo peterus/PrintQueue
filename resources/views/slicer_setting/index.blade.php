@@ -7,4 +7,8 @@
             <li><a href="/slicersetting/{!! $setting->id !!}">{!! $setting->name !!}</a></li>
         @endforeach
     </ul>
+
+    @if(isset($slicer))
+        <p><a href="/slicer/{!! $slicer->id !!}/setting/create">Create</a></p>
+    @endif
 @stop

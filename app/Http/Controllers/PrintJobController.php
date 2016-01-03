@@ -20,7 +20,7 @@ class PrintJobController extends Controller
     public function project_index(Project $project)
     {
         $jobs = $project->PrintJob;
-        return view('print_job.index', compact('jobs'));
+        return view('print_job.index', compact('jobs', 'project'));
     }
 
     public function index()
@@ -49,7 +49,7 @@ class PrintJobController extends Controller
     {
         $job = new PrintJob($request->all());
         $project->PrintJob()->save($job);
-        return redirect('printjob');
+        return redirect('projects/'.$project->id.'/printjob');
     }
 
     /**

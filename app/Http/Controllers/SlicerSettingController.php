@@ -14,7 +14,7 @@ class SlicerSettingController extends Controller
     public function slicer_index(Slicer $slicer)
     {
         $settings = $slicer->Setting;
-        return view('slicer_setting.index', compact('settings'));
+        return view('slicer_setting.index', compact('settings', 'slicer'));
     }
 
     /**
