@@ -1,14 +1,14 @@
 @extends('main')
 
 @section('content')
-    <h2>{!! $printjob->name !!}</h2>
+    <h2>{{ $printjob->name }}</h2>
     <hr/>
     <p>
-        Create at: <b>{!! $printjob->created_at !!}</b><br>
-        Last update: <b>{!! $printjob->updated_at !!}</b>
+        Create at: <b>{{ $printjob->created_at }}</b><br>
+        Last update: <b>{{ $printjob->updated_at }}</b>
     </p>
 
-    <p><a href="/printjob/{!! $printjob->id !!}/edit">edit</a></p>
+    <p><a href="/printjob/{{ $printjob->id }}/edit">edit</a></p>
 
     <hr/>
 
@@ -19,4 +19,27 @@
     {!! Form::close() !!}
 
     @include('errors.list')
+
+    <hr/>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Jobs</th>
+                @foreach($settings as $setting)
+                    <th>{{ $setting->name }}</th>
+                @endforeach
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ $printjob->name }}</td>
+                @foreach($settings as $setting)
+                    <td>{{ App\PrintTime::where('print_job_id', '=', $printjob->id)->where('slicer_setting_id', '=', $setting->id)->first()->PrintTime() }}</td>
+                @endforeach
+            </tr>
+            </tbody>
+        </table>
+    </div>
 @stop

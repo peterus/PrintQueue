@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Edit: {!! $printjob->name !!}</h1>
+    <h1>Edit: {{ $printjob->name }}</h1>
 
     <hr/>
 

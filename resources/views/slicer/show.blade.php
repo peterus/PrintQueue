@@ -1,16 +1,16 @@
 @extends('main')
 
 @section('content')
-    <h2>{!! $slicer->name !!}</h2>
+    <h2>{{ $slicer->name }}</h2>
     <hr/>
     <p>
-        Create at: <b>{!! $slicer->created_at !!}</b><br>
-        Last update: <b>{!! $slicer->updated_at !!}</b><br>
-        Command: <b>{!! $slicer->command !!}</b>
+        Create at: <b>{{ $slicer->created_at }}</b><br>
+        Last update: <b>{{ $slicer->updated_at }}</b><br>
+        Command: <b>{{ $slicer->command }}</b>
     </p>
     <p>
-        <a href="/slicer/{!! $slicer->id !!}/edit">edit</a><br>
-        <a href="/slicer/{!! $slicer->id !!}/setting">Settings</a>
+        <a href="/slicer/{{ $slicer->id }}/edit">edit</a><br>
+        <a href="/slicer/{{ $slicer->id }}/setting">Settings</a>
     </p>
 
     <hr/>

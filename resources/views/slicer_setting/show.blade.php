@@ -1,14 +1,14 @@
 @extends('main')
 
 @section('content')
-    <h2>{!! $setting->name !!}</h2>
+    <h2>{{ $setting->name }}</h2>
     <hr/>
     <p>
-        Create at: <b>{!! $setting->created_at !!}</b><br>
-        Last update: <b>{!! $setting->updated_at !!}</b>
+        Create at: <b>{{ $setting->created_at }}</b><br>
+        Last update: <b>{{ $setting->updated_at }}</b>
     </p>
 
-    <p><a href="/slicersetting/{!! $setting->id !!}/edit">edit</a></p>
+    <p><a href="/slicersetting/{{ $setting->id }}/edit">edit</a></p>
 
     <hr/>
 

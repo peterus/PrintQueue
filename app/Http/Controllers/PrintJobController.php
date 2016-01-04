@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PrintJobRequest;
+use App\Slicer;
 use App\SlicerSetting;
 use Request;
 
@@ -27,13 +28,14 @@ class PrintJobController extends Controller
     public function project_index(Project $project)
     {
         $jobs = $project->PrintJob;
-        return view('print_job.index', compact('jobs', 'project'));
+        return view('print_job.project_index', compact('jobs', 'project'));
     }
 
     public function index()
     {
         $jobs = PrintJob::All();
-        return view('print_job.index', compact('jobs'));
+        $settings = SlicerSetting::All();
+        return view('print_job.index', compact('jobs', 'settings'));
     }
 
     /**
@@ -82,7 +84,8 @@ class PrintJobController extends Controller
      */
     public function show(PrintJob $printjob)
     {
-        return view('print_job.show', compact('printjob'));
+        $settings = SlicerSetting::All();
+        return view('print_job.show', compact('printjob', 'settings'));
     }
 
     /**
