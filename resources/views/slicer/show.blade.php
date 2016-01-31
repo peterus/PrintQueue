@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')
-    <h2>{{ $slicer->name }}</h2>
+    <h2>{{ $slicer->name }} {{ $slicer->version }}</h2>
     <hr/>
     <p>
         Create at: <b>{{ $slicer->created_at }}</b><br>

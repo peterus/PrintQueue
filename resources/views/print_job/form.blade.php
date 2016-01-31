@@ -4,6 +4,11 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('quantity', 'Quantity:') !!}
+    {!! Form::text('quantity', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('stl', 'STL File:') !!}
     {!! Form::file('stl', ['class' => 'btn btn-default btn-file']) !!}
 </div>

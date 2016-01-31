@@ -15,8 +15,8 @@ class CreateSlicersTable extends Migration
         Schema::create('slicers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('command');
             $table->text('version');
+            $table->text('command');
             $table->timestamps();
         });
     }

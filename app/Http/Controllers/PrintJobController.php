@@ -115,21 +115,23 @@ class PrintJobController extends Controller
         {
             array_map('unlink', glob(storage_path("app/".$printjob->file_name."*")));
         }
+        $printjob->update($request->all());
 
         $file = Request::file('stl');
-        $extension = $file->getClientOriginalExtension();
-        $new_filename = $file->getFilename().'.'.$extension;
-        Storage::disk('local')->put($new_filename, File::get($file));
-
-        $printjob->update($request->all());
-        $printjob->file_name = $file->getFilename();
-        $printjob->file_extension = ".".$extension;
-        $printjob->save();
-
-        foreach(SlicerSetting::All() as $setting)
+        if($file != null)
         {
-            //$this->dispatch(new ProcessSTL($printjob, $setting));
-            Queue::push(new ProcessSTL($printjob, $setting));
+            $extension = $file->getClientOriginalExtension();
+            $new_filename = $file->getFilename().'.'.$extension;
+            Storage::disk('local')->put($new_filename, File::get($file));
+            $printjob->file_name = $file->getFilename();
+            $printjob->file_extension = ".".$extension;
+            $printjob->save();
+
+            foreach(SlicerSetting::All() as $setting)
+            {
+                //$this->dispatch(new ProcessSTL($printjob, $setting));
+                Queue::push(new ProcessSTL($printjob, $setting));
+            }
         }
 
         return redirect('printjob');

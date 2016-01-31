@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slicer extends Model
 {
-    protected $fillable = ['name', 'command'];
+    protected $fillable = ['name', 'version', 'command'];
 
     public function Setting()
     {

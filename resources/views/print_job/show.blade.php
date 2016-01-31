@@ -5,7 +5,8 @@
     <hr/>
     <p>
         Create at: <b>{{ $printjob->created_at }}</b><br>
-        Last update: <b>{{ $printjob->updated_at }}</b>
+        Last update: <b>{{ $printjob->updated_at }}</b><br>
+        Quantity: <b>{{ $printjob->quantity }}</b>
     </p>
 
     <p><a href="/printjob/{{ $printjob->id }}/edit">edit</a></p>
