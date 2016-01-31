@@ -1,32 +1,25 @@
 <?php
 
-namespace App\Commands;
-
+namespace App\Jobs;
 use App\PrintJob;
 use App\PrintTime;
 use App\SlicerSetting;
-use App\Slicer;
 
-use App\Commands\Command;
+use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use Mockery\CountValidator\Exception;
 
-class ProcessSTL extends Command implements SelfHandling, ShouldQueue
+class ProcessSTL extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
     protected $printjob, $slicersetting;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
-     * @param PrintJob $printjob
-     * @param SlicerSetting $slicersetting
-     * @internal param PrintJob $job
-     * @internal param SlicerSetting $setting
+     * @return void
      */
     public function __construct(PrintJob $printjob, SlicerSetting $slicersetting)
     {
@@ -35,7 +28,7 @@ class ProcessSTL extends Command implements SelfHandling, ShouldQueue
     }
 
     /**
-     * Execute the command.
+     * Execute the job.
      *
      * @return void
      */
@@ -56,7 +49,8 @@ class ProcessSTL extends Command implements SelfHandling, ShouldQueue
         $found = strpos($result, "Done.");
         if($found == false)
         {
-            return;
+            throw new Exception;
+            return "Error!";
         }
 
         $pos = strpos($result, "Filament");

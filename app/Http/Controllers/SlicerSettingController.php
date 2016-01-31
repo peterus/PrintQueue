@@ -12,7 +12,6 @@ use App\SlicerSetting;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-
 class SlicerSettingController extends Controller
 {
     public function slicer_index(Slicer $slicer)

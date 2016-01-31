@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SlicerRequest;
-use Request;
 
 use App\Http\Requests;
 use App\Slicer;

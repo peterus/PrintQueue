@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PrintJobRequest;
-use App\Slicer;
-use App\SlicerSetting;
 use Request;
+use App\SlicerSetting;
 
 use App\Http\Requests;
 use App\Project;
 use App\PrintJob;
 
-use App\Commands\ProcessSTL;
+use App\Jobs\ProcessSTL;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -66,9 +65,11 @@ class PrintJobController extends Controller
         $job->file_extension = ".".$extension;
         $project->PrintJob()->save($job);
 
+
         foreach(SlicerSetting::All() as $setting)
         {
-            Queue::push(new ProcessSTL($job, $setting));
+            $this->dispatch(new ProcessSTL($job, $setting));
+            //Queue::push(new ProcessSTL($job, $setting));
         }
 
         return redirect('projects/'.$project->id.'/printjob');
@@ -127,6 +128,7 @@ class PrintJobController extends Controller
 
         foreach(SlicerSetting::All() as $setting)
         {
+            //$this->dispatch(new ProcessSTL($printjob, $setting));
             Queue::push(new ProcessSTL($printjob, $setting));
         }
 

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProjectRequest;
-use Request;
-
-use App\Http\Requests;
 use App\Project;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {

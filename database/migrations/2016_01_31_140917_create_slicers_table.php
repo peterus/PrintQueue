@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProject extends Migration
+class CreateSlicersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,11 @@ class CreateProject extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('slicers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('command');
+            $table->text('version');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateProject extends Migration
      */
     public function down()
     {
-        Schema::drop('projects');
+        Schema::drop('slicers');
     }
 }
