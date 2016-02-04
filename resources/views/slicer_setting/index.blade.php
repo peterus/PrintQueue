@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.app')
 
 @section('content')
     <h1>Slicer Settings:</h1>

@@ -1,12 +1,12 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
+    Route::auth();
 
-    Route::get('/', function () {
-        //return view('welcome');
-        return redirect('projects');
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', function () {
+        return redirect('/');
     });
-
 
     Route::get('projects', 'ProjectController@index');
     Route::post('projects', 'ProjectController@store');
@@ -44,11 +44,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('slicersetting/{slicersetting}/edit', 'SlicerSettingController@edit');
 
 
-    View::composer('menu', function ($view) {
+    View::composer('layouts.menu', function ($view) {
         $view->with('menu_projects', App\Project::all());
     });
-    View::composer('menu', function ($view) {
+    View::composer('layouts.menu', function ($view) {
         $view->with('menu_slicer', App\Slicer::all());
     });
 
 });
+

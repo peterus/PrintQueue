@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\File;
 
 class SlicerSettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function slicer_index(Slicer $slicer)
     {
         $settings = $slicer->Setting;
