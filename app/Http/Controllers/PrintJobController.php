@@ -15,6 +15,7 @@ use App\Jobs\ProcessSTL;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Auth;
 
 class PrintJobController extends Controller
 {
@@ -37,6 +38,7 @@ class PrintJobController extends Controller
 
     public function index()
     {
+        //$jobs = Auth::user()->Project()->PrintJob;
         $jobs = PrintJob::All();
         $settings = SlicerSetting::All();
         return view('print_job.index', compact('jobs', 'settings'));
@@ -70,11 +72,9 @@ class PrintJobController extends Controller
         $job->file_extension = ".".$extension;
         $project->PrintJob()->save($job);
 
-
         foreach(SlicerSetting::All() as $setting)
         {
             $this->dispatch(new ProcessSTL($job, $setting));
-            //Queue::push(new ProcessSTL($job, $setting));
         }
 
         return redirect('projects/'.$project->id.'/printjob');
@@ -128,14 +128,14 @@ class PrintJobController extends Controller
             $extension = $file->getClientOriginalExtension();
             $new_filename = $file->getFilename().'.'.$extension;
             Storage::disk('local')->put($new_filename, File::get($file));
+
             $printjob->file_name = $file->getFilename();
             $printjob->file_extension = ".".$extension;
             $printjob->save();
 
             foreach(SlicerSetting::All() as $setting)
             {
-                //$this->dispatch(new ProcessSTL($printjob, $setting));
-                Queue::push(new ProcessSTL($printjob, $setting));
+                $this->dispatch(new ProcessSTL($printjob, $setting));
             }
         }
 

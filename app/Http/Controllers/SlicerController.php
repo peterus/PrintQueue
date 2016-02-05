@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SlicerRequest;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Slicer;
@@ -21,7 +22,7 @@ class SlicerController extends Controller
      */
     public function index()
     {
-        $slicers = Slicer::all();
+        $slicers = Auth::user()->Slicer;
         return view('slicer.index', compact('slicers'));
     }
 

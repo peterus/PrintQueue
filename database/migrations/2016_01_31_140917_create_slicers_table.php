@@ -14,10 +14,16 @@ class CreateSlicersTable extends Migration
     {
         Schema::create('slicers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->text('version');
             $table->text('command');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

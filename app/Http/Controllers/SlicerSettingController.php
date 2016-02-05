@@ -8,6 +8,9 @@ use Request;
 use App\Http\Requests;
 use App\Slicer;
 use App\SlicerSetting;
+use App\PrintJob;
+
+use App\Jobs\ProcessSTL;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -64,6 +67,12 @@ class SlicerSettingController extends Controller
         $setting->file_name = $file->getFilename();
         $setting->file_extension = ".".$extension;
         $slicer->Setting()->save($setting);
+
+        foreach(PrintJob::All() as $job)
+        {
+            $this->dispatch(new ProcessSTL($job, $setting));
+        }
+
         return redirect('slicersetting');
     }
 
@@ -105,16 +114,25 @@ class SlicerSettingController extends Controller
         {
             Storage::disk('local')->delete($setting->file_name.$setting->file_extension);
         }
+        $setting->update($request->all());
 
         $file = Request::file('config');
-        $extension = $file->getClientOriginalExtension();
-        $new_filename = $file->getFilename().'.'.$extension;
-        Storage::disk('local')->put($new_filename, File::get($file));
+        if($file != null)
+        {
+            $extension = $file->getClientOriginalExtension();
+            $new_filename = $file->getFilename() . '.' . $extension;
+            Storage::disk('local')->put($new_filename, File::get($file));
 
-        $setting->update($request->all());
-        $setting->file_name = $file->getFilename();
-        $setting->file_extension = ".".$extension;
-        $setting->save();
+            $setting->file_name = $file->getFilename();
+            $setting->file_extension = "." . $extension;
+            $setting->save();
+
+            foreach (PrintJob::All() as $job)
+            {
+                $this->dispatch(new ProcessSTL($job, $setting));
+            }
+        }
+
         return redirect('slicersetting');
     }
 

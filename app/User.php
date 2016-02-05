@@ -23,4 +23,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function Slicer()
+    {
+        return $this->hasMany('App\Slicer');
+    }
+
+    public function Project()
+    {
+        return $this->hasMany('App\Project');
+    }
 }

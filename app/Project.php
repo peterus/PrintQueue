@@ -12,4 +12,9 @@ class Project extends Model
     {
         return $this->hasMany('App\PrintJob');
     }
+
+    public function User()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

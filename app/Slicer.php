@@ -12,4 +12,9 @@ class Slicer extends Model
     {
         return $this->hasMany('App\SlicerSetting');
     }
+
+    public function User()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

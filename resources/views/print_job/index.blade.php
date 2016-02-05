@@ -22,7 +22,7 @@
                     <td><a href="/printjob/{{ $job->id }}">{{ $job->name }}</a></td>
                     <td>{{ $job->quantity }}</td>
                     @foreach($settings as $setting)
-                        <td>{{ App\PrintTime::where('print_job_id', '=', $job->id)->where('slicer_setting_id', '=', $setting->id)->first()->PrintTime() }}</td>
+                        <td>{{ App\PrintTime::get($job, $setting) }}</td>
                     @endforeach
                 </tr>
             @endforeach

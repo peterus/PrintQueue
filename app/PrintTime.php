@@ -16,6 +16,17 @@ class PrintTime extends Model
         return $this->belongsTo('App\SlicerSetting');
     }
 
+    public static function get(PrintJob $job, SlicerSetting $setting)
+    {
+        $print_time = PrintTime::where('print_job_id', '=', $job->id)
+            ->where('slicer_setting_id', '=', $setting->id)->first();
+        if($print_time != null)
+        {
+            return $print_time->PrintTime();
+        }
+        return "";
+    }
+
     public function PrintTime()
     {
         $min = $this->time / 60;

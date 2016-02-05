@@ -37,7 +37,7 @@
             <tr>
                 <td>{{ $printjob->name }}</td>
                 @foreach($settings as $setting)
-                    <td>{{ App\PrintTime::where('print_job_id', '=', $printjob->id)->where('slicer_setting_id', '=', $setting->id)->first()->PrintTime() }}</td>
+                    <td>{{ App\PrintTime::get($printjob, $setting) }}</td>
                 @endforeach
             </tr>
             </tbody>
