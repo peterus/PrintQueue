@@ -44,7 +44,7 @@ class SlicerController extends Controller
      */
     public function store(SlicerRequest $request)
     {
-        Slicer::create($request->all());
+        Auth::user()->Slicer()->create($request->all());
         return redirect('slicer');
     }
 

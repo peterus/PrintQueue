@@ -42,7 +42,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        Project::create($request->all());
+        Auth::user()->Project()->create($request->all());
         return redirect('projects');
     }
 

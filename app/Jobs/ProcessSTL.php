@@ -49,7 +49,7 @@ class ProcessSTL extends Job implements ShouldQueue
         $found = strpos($result, "Done.");
         if($found == false)
         {
-            throw new Exception;
+            throw new Exception($command."\n".$result);
             return "Error!";
         }
 
@@ -57,8 +57,10 @@ class ProcessSTL extends Job implements ShouldQueue
         preg_match_all('!\d+!', $result, $matches, PREG_PATTERN_ORDER, $pos);
         $fillament = $matches[0][0];
 
-        $result = shell_exec("/home/pbuchegger/GCodeAnalizer/gcode.py ".$full_gcode);
+        $result = shell_exec("/srv/www/gcode.py ".$full_gcode);
+        //print_r($result);
         preg_match_all('!\d+!', $result, $matches);
+        //print_r($matches);
         $print_time = $matches[0][0];
 
         $printtime = PrintTime::where('print_job_id', '=', $this->printjob->id)->where('slicer_setting_id', '=', $this->slicersetting->id)->first();

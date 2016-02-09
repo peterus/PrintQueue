@@ -24,7 +24,6 @@ class PrintJobRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
         ];
     }
 }

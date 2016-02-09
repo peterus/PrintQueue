@@ -51,7 +51,8 @@ class PrintJobController extends Controller
      */
     public function create(Project $project)
     {
-        return view('print_job.create', compact('project'));
+        $quantity = 1;
+        return view('print_job.create', compact('project', 'quantity'));
     }
 
     /**
@@ -68,6 +69,7 @@ class PrintJobController extends Controller
         Storage::disk('local')->put($new_filename, File::get($file));
 
         $job = new PrintJob($request->all());
+        $job->name = $file->getClientOriginalName();
         $job->file_name = $file->getFilename();
         $job->file_extension = ".".$extension;
         $project->PrintJob()->save($job);
@@ -103,7 +105,8 @@ class PrintJobController extends Controller
      */
     public function edit(PrintJob $printjob)
     {
-        return view('print_job.edit', compact('printjob'));
+        $quantity = $printjob->quantity;
+        return view('print_job.edit', compact('printjob', 'quantity'));
     }
 
     /**
@@ -129,6 +132,7 @@ class PrintJobController extends Controller
             $new_filename = $file->getFilename().'.'.$extension;
             Storage::disk('local')->put($new_filename, File::get($file));
 
+            $printjob->name = $file->getClientOriginalName();
             $printjob->file_name = $file->getFilename();
             $printjob->file_extension = ".".$extension;
             $printjob->save();
