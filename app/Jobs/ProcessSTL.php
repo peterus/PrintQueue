@@ -39,6 +39,11 @@ class ProcessSTL extends Job implements ShouldQueue
         $gcode = $this->printjob->file_name."-".$this->slicersetting->file_name.".gcode";
         $full_gcode = storage_path("app/".$gcode);
 
+	if(file_exists($full_gcode))
+	{
+		unlink($full_gcode);
+	}
+
         // build command for commandline
         $command = $this->slicersetting->Slicer->command." ".$stl." --load ".$config." --output ".$full_gcode." 2>&1";
 
@@ -57,7 +62,7 @@ class ProcessSTL extends Job implements ShouldQueue
         preg_match_all('!\d+!', $result, $matches, PREG_PATTERN_ORDER, $pos);
         $fillament = $matches[0][0];
 
-        $result = shell_exec(storage_path("gcode.py")." ".$full_gcode);
+        $result = shell_exec(storage_path()."/gcode.py ".$full_gcode);
         //print_r($result);
         preg_match_all('!\d+!', $result, $matches);
         //print_r($matches);
