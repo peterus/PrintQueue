@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python
 import math
 import sys
 
@@ -96,5 +96,4 @@ with open(file) as f:
 		old_e_cord = e_cord
 		old_f_rate = f_rate
 
-print("Estimated filament will be used: " + str(math.floor(dist) / 100) + " cm")
-print("Estimated print time: " + str(math.floor(time / 3600)) + " hours " + str(math.floor(math.fmod(time / 60, 60))) + " minutes")
+print("Estimated print time: " + str(math.floor(time)) + " seconds or " + str(math.floor(time / 3600)) + " hours " + str(math.floor(math.fmod(time / 60, 60))) + " minutes")

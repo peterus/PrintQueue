@@ -57,7 +57,7 @@ class ProcessSTL extends Job implements ShouldQueue
         preg_match_all('!\d+!', $result, $matches, PREG_PATTERN_ORDER, $pos);
         $fillament = $matches[0][0];
 
-        $result = shell_exec("/srv/www/gcode.py ".$full_gcode);
+        $result = shell_exec(storage_path("gcode.py")." ".$full_gcode);
         //print_r($result);
         preg_match_all('!\d+!', $result, $matches);
         //print_r($matches);
