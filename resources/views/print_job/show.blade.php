@@ -6,18 +6,14 @@
     <p>
         Create at: <b>{{ $printjob->created_at }}</b><br>
         Last update: <b>{{ $printjob->updated_at }}</b><br>
-        Quantity: <b>{{ $printjob->quantity }}</b>
+        Quantity: <b>{{ $printjob->quantity }}</b><br>
+        Prints done: <b>{{ $printjob->prints_done }}</b>
     </p>
 
-    <p><a href="/printjob/{{ $printjob->id }}/edit">edit</a></p>
-
-    <hr/>
-
-    {!! Form::model($printjob, ['method' => 'DELETE', 'action' => ['PrintJobController@destroy', $printjob->id]]) !!}
-    <div class="form-group">
-        {!! Form::submit("Delete Print Job", ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-    {!! Form::close() !!}
+    <p>
+        <a href="/printjob/{{ $printjob->id }}/edit">edit</a><br>
+        <a href="/printjob/{{ $printjob->id }}/destroy">delete</a>
+    </p>
 
     @include('errors.list')
 

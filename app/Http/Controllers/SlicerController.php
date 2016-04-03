@@ -57,7 +57,8 @@ class SlicerController extends Controller
      */
     public function show(Slicer $slicer)
     {
-        return view('slicer.show', compact('slicer'));
+        $settings = $slicer->Setting;
+        return view('slicer.show', compact('slicer', 'settings'));
     }
 
     /**

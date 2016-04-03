@@ -10,6 +10,7 @@
                 <th>Project</th>
                 <th>Jobs</th>
                 <th>Quantity</th>
+                <th>Prints done</th>
                 @foreach($settings as $setting)
                     <th>{{ $setting->name }}</th>
                 @endforeach
@@ -21,6 +22,7 @@
                     <td><a href="/projects/{{ $job->Project->id }}">{{ $job->Project->name }}</a></td>
                     <td><a href="/printjob/{{ $job->id }}">{{ $job->name }}</a></td>
                     <td>{{ $job->quantity }}</td>
+                    <td>{{ $job->prints_done }}</td>
                     @foreach($settings as $setting)
                         <td>{{ App\PrintTime::get($job, $setting) }}</td>
                     @endforeach

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PrintJob extends Model
 {
-    protected $fillable = ['name', 'quantity'];
+    protected $fillable = ['name', 'quantity', 'prints_done'];
 
     public function Project()
     {

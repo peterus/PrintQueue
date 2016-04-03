@@ -52,7 +52,8 @@ class PrintJobController extends Controller
     public function create(Project $project)
     {
         $quantity = 1;
-        return view('print_job.create', compact('project', 'quantity'));
+        $prints_done = 0;
+        return view('print_job.create', compact('project', 'quantity', 'prints_done'));
     }
 
     /**
@@ -106,7 +107,8 @@ class PrintJobController extends Controller
     public function edit(PrintJob $printjob)
     {
         $quantity = $printjob->quantity;
-        return view('print_job.edit', compact('printjob', 'quantity'));
+        $prints_done = $printjob->prints_done;
+        return view('print_job.edit', compact('printjob', 'quantity', 'prints_done'));
     }
 
     /**

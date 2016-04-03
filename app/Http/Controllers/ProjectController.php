@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\SlicerSetting;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,7 +55,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('project.show', compact('project'));
+        $jobs = $project->PrintJob;
+        $settings = SlicerSetting::All();
+        return view('project.show', compact('project', 'settings', 'jobs'));
     }
 
     /**

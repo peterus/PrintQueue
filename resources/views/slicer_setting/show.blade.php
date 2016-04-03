@@ -8,15 +8,10 @@
         Last update: <b>{{ $setting->updated_at }}</b>
     </p>
 
-    <p><a href="/slicersetting/{{ $setting->id }}/edit">edit</a></p>
-
-    <hr/>
-
-    {!! Form::model($setting, ['method' => 'DELETE', 'action' => ['SlicerSettingController@destroy', $setting->id]]) !!}
-    <div class="form-group">
-        {!! Form::submit("Delete Slicer Setting", ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-    {!! Form::close() !!}
+    <p>
+        <a href="/slicersetting/{{ $setting->id }}/edit">edit</a><br>
+        <a href="/slicersetting/{{ $setting->id }}/destroy">delete</a>
+    </p>
 
     @include('errors.list')
 @stop

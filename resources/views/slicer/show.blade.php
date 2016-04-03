@@ -10,16 +10,17 @@
     </p>
     <p>
         <a href="/slicer/{{ $slicer->id }}/edit">edit</a><br>
-        <a href="/slicer/{{ $slicer->id }}/setting">Settings</a>
+        <a href="/slicer/{{ $slicer->id }}/destroy">delete</a>
     </p>
 
     <hr/>
 
-    {!! Form::model($slicer, ['method' => 'DELETE', 'action' => ['SlicerController@destroy', $slicer->id]]) !!}
-    <div class="form-group">
-        {!! Form::submit("Delete Slicer", ['class' => 'btn btn-primary form-control']) !!}
-    </div>
-    {!! Form::close() !!}
+    <h3>Slicer Settings:</h3>
+    <ul>
+        @foreach($settings as $setting)
+            <li><a href="/slicersetting/{{ $setting->id }}">{{ $setting->name }}</a></li>
+        @endforeach
+    </ul>
 
     @include('errors.list')
 @stop
