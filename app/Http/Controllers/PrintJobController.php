@@ -33,7 +33,7 @@ class PrintJobController extends Controller
     public function project_index(Project $project)
     {
         $jobs = $project->PrintJob;
-        return view('print_job.project_index', compact('jobs', 'project'));
+        return view('print_job.project_index', compact('jobs', 'project'))->with('menu_project', $project);
     }
 
     public function index()
@@ -53,7 +53,7 @@ class PrintJobController extends Controller
     {
         $quantity = 1;
         $prints_done = 0;
-        return view('print_job.create', compact('project', 'quantity', 'prints_done'));
+        return view('print_job.create', compact('project', 'quantity', 'prints_done'))->with('menu_project', $project);
     }
 
     /**
@@ -80,7 +80,7 @@ class PrintJobController extends Controller
             $this->dispatch(new ProcessSTL($job, $setting));
         }
 
-        return redirect('projects/'.$project->id.'/printjob');
+        return redirect('printjob/'.$job->id);
     }
 
     /**
@@ -94,7 +94,7 @@ class PrintJobController extends Controller
     public function show(PrintJob $printjob)
     {
         $settings = SlicerSetting::All();
-        return view('print_job.show', compact('printjob', 'settings'));
+        return view('print_job.show', compact('printjob', 'settings'))->with('menu_project', $printjob->project);
     }
 
     /**
@@ -108,7 +108,14 @@ class PrintJobController extends Controller
     {
         $quantity = $printjob->quantity;
         $prints_done = $printjob->prints_done;
-        return view('print_job.edit', compact('printjob', 'quantity', 'prints_done'));
+        return view('print_job.edit', compact('printjob', 'quantity', 'prints_done'))->with('menu_project', $printjob->project);
+    }
+
+    public function addoneprint(PrintJob $printjob)
+    {
+        $printjob->prints_done += 1;
+        $printjob->update();
+        return redirect('printjob/'.$printjob->id);
     }
 
     /**
@@ -121,7 +128,7 @@ class PrintJobController extends Controller
      */
     public function update(PrintJobRequest $request, PrintJob $printjob)
     {
-        if($printjob->file_name != "" && Storage::disk('local')->exists($printjob->file_name.$printjob->file_extension))
+        if($request->file_name != "" && Storage::disk('local')->exists($printjob->file_name.$printjob->file_extension))
         {
             array_map('unlink', glob(storage_path("app/".$printjob->file_name."*")));
         }
@@ -145,7 +152,7 @@ class PrintJobController extends Controller
             }
         }
 
-        return redirect('printjob');
+        return redirect('printjob/'.$printjob->id);
     }
 
     /**

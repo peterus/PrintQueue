@@ -13,14 +13,17 @@
         <a href="/slicer/{{ $slicer->id }}/destroy">delete</a>
     </p>
 
+    @include('errors.list')
+
     <hr/>
 
-    <h3>Slicer Settings:</h3>
+    <h3 class="sub-header">Slicer Settings:</h3>
     <ul>
         @foreach($settings as $setting)
             <li><a href="/slicersetting/{{ $setting->id }}">{{ $setting->name }}</a></li>
         @endforeach
     </ul>
 
-    @include('errors.list')
+    <p><a href="/slicer/{{ $slicer->id }}/setting/create">Create</a></p>
+
 @stop

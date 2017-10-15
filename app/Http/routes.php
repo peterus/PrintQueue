@@ -24,6 +24,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::patch('printjob/{printjob}', 'PrintJobController@update');
     Route::get('printjob/{printjob}', 'PrintJobController@show');
     Route::get('printjob/{printjob}/edit', 'PrintJobController@edit');
+    Route::get('printjob/{printjob}/addoneprint', 'PrintJobController@addoneprint');
 
 
     Route::get('slicer', 'SlicerController@index');
@@ -43,6 +44,20 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('slicersetting/{slicersetting}', 'SlicerSettingController@show');
     Route::get('slicersetting/{slicersetting}/edit', 'SlicerSettingController@edit');
 
+    Route::get('stl/{filename}', function ($filename)
+    {
+        $path = storage_path("app/".$filename);
+
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
 
     View::composer('layouts.menu', function ($view) {
         $view->with('menu_projects', App\Project::all());
@@ -50,6 +65,5 @@ Route::group(['middleware' => 'web'], function () {
     View::composer('layouts.menu', function ($view) {
         $view->with('menu_slicer', App\Slicer::all());
     });
-
 });
 

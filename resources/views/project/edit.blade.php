@@ -6,7 +6,7 @@
 
     <hr/>
 
-    {!! Form::model($project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $project->id]]) !!}
+    {!! Form::model($project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $project->id], 'files' => true]) !!}
 
     @include('project.form', ['submitButtonText' => 'Update Project'])
 

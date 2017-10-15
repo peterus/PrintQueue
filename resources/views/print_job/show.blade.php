@@ -7,12 +7,18 @@
         Create at: <b>{{ $printjob->created_at }}</b><br>
         Last update: <b>{{ $printjob->updated_at }}</b><br>
         Quantity: <b>{{ $printjob->quantity }}</b><br>
-        Prints done: <b>{{ $printjob->prints_done }}</b>
+        Prints done: <b>{{ $printjob->prints_done }}</b> (<a href="/printjob/{{ $printjob->id }}/addoneprint">++</a>)
     </p>
 
     <p>
         <a href="/printjob/{{ $printjob->id }}/edit">edit</a><br>
         <a href="/printjob/{{ $printjob->id }}/destroy">delete</a>
+    </p>
+
+    <p>
+        <iframe id="vs_iframe"
+                src="http://www.viewstl.com/?embedded&rotation=yes&url={{ url('stl/'.$printjob->file_name.$printjob->file_extension) }}&orientation=top"
+                style="border:0;margin:0;width:100%;height:500px;"></iframe>
     </p>
 
     @include('errors.list')

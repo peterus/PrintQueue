@@ -12,8 +12,8 @@
             <ul class="dropdown-menu">
                 <li><a href="{{ url('/projects') }}">all</a></li>
                 <li role="separator" class="divider"></li>
-                @foreach($menu_projects as $project)
-                    <li><a href="{{ url('/projects/'.$project->id) }}">{{ $project->name }}</a></li>
+                @foreach($menu_projects as $project_loop)
+                    <li><a href="{{ url('/projects/'.$project_loop->id) }}">{{ $project_loop->name }}</a></li>
                 @endforeach
             </ul>
         </li>
@@ -24,11 +24,14 @@
                 <li><a href="{{ url('/slicer') }}">all Slicer</a></li>
                 <li><a href="{{ url('/slicersetting') }}">all Settings</a></li>
                 <li role="separator" class="divider"></li>
-                @foreach($menu_slicer as $slicer)
-                    <li><a href="{{ url('/slicer/'.$slicer->id) }}">{{ $slicer->name }}</a></li>
+                @foreach($menu_slicer as $slicer_loop)
+                    <li><a href="{{ url('/slicer/'.$slicer_loop->id) }}">{{ $slicer_loop->name }}</a></li>
                 @endforeach
             </ul>
         </li>
+        @if(isset($menu_project))
+        <li><a href="{{ url('/projects/'.$menu_project->id) }}">{{ $menu_project->name }}</a></li>
+        @endif
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

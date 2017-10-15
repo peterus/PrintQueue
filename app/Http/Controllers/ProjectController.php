@@ -57,7 +57,7 @@ class ProjectController extends Controller
     {
         $jobs = $project->PrintJob;
         $settings = SlicerSetting::All();
-        return view('project.show', compact('project', 'settings', 'jobs'));
+        return view('project.show', compact('project', 'settings', 'jobs'))->with('menu_project', $project);
     }
 
     /**
@@ -69,7 +69,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('project.edit', compact('project'));
+        return view('project.edit', compact('project'))->with('menu_project', $project);
     }
 
     /**
